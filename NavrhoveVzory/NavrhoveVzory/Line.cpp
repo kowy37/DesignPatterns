@@ -12,15 +12,16 @@ Line::~Line()
 {
 }
 
-void Line::add(Point & p)
+void Line::add(std::shared_ptr<Point>& p)
 {
 	if (! _points.empty()) {
 		auto last = std::rbegin(_points);
-		_length += p.getDistanceFrom(**last);
+		_length += p->getDistanceFrom(**last);
 	}
 
-	_points.push_back(&p);
-	p.addObserver(*this);
+	_points.push_back(p);
+	//std::weak_ptr<Line> param = shared_from_this();
+	p->addObserver(shared_from_this());
 }
 
 void Line::refresh()

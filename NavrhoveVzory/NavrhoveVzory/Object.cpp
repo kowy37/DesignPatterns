@@ -10,22 +10,23 @@ Object::~Object()
 {
 }
 
-void Object::addObserver(Observer & o)
+void Object::addObserver(std::weak_ptr<Observer> o)
 {
-	if (! (std::find(std::begin(_observers), std::end(_observers), &o) == std::end(_observers))) {
-		return;
-	}
-	_observers.push_back(&o);
+	
+	_observers.push_back(o);
 }
 
-void Object::removeObserver(const Observer & o)
+void Object::removeObserver(const std::weak_ptr<Observer> o)
 {
-	std::remove(std::begin(_observers), std::end(_observers), &o);
+	
 }
 
 void Object::alertObserver()
 {
 	for (auto o : _observers) {
-		o->refresh();
+		auto p = o.lock();
+		if(p)
+			p->refresh();
+	
 	}
 }

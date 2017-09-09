@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <memory>
 #include "Observer.h"
 class Object
 {
@@ -7,10 +8,10 @@ public:
 	Object();
 	~Object();
 
-	void addObserver(Observer& o);
-	void removeObserver(const Observer& o);
+	void addObserver(std::weak_ptr<Observer> o);
+	void removeObserver(const std::weak_ptr<Observer> o);
 	void alertObserver();
 private:
-	std::vector<Observer*> _observers;
+	std::vector<std::weak_ptr<Observer>> _observers;
 };
 
