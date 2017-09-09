@@ -14,6 +14,7 @@ public:
 	virtual void refresh() override;
 	void print() const;
 	void calcLength();
+	void f() {}
 private:
 	std::vector<const Point*> _points;
 	float _length;
